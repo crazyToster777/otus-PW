@@ -1,0 +1,21 @@
+{
+  "name": "playwright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:all": "npx playwright test",
+    "test:chrome:desktop": "npx playwright test --project=chromium",
+    "test:chrome:mobile": "npx playwright test --project=chromium-mobile"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.42.1",
+    "@types/node": "^20.11.27"
+  },
+  "dependencies": {
+    "allure-playwright": "^2.14.1"
+  }
+}
