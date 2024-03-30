@@ -1,4 +1,6 @@
 import {test, expect} from "@playwright/test";
+import  { LoginPage } from '../pages/loginPage'
+import { BookPage } from "../pages/booksPage";
 
 const cookie = [
     {name: "cookie1", value: "666", path: "/", domain: "demoqa.com"},
@@ -25,18 +27,30 @@ const mockData = {
 test.describe('Auth test cases', async () => {
     // test.use({ storageState: 'playwright/.auth/user.json' });
     test('check login', async ({page}) => {
-        await page.goto('/login');
 
+        const loginPage = new LoginPage(page)
+        await loginPage.open();
+        await loginPage.login('Dannytest', 'Test12345!' );
         // Взаимодействие со страницей - https://playwright.dev/docs/locators & https://playwright.dev/docs/input
-
-        await page.locator('input[id=userName]').fill('Dannytest');
-        await page.locator('input[id=password]').fill('Test12345!');
-        await page.locator('button[id=login]').click();
-
-
-        await expect(page.locator('#userName-value')).toBeVisible();
+        await expect(page.locator('#userName-valu')).toBeVisible();
 
     })
+
+    test('Search book', async ({page}) => {
+        const loginPage = new LoginPage(page)
+        await loginPage.open();
+        const profilePage = await loginPage.login('Dannytest', 'Test12345!' );
+
+        await profilePage.searchElement.searchItem('test book')
+
+        await profilePage.choosePaginationOption();
+
+        await page.goto('/modal-dialogs')
+        await page.locator('[id=showSmallModal]').click()
+        await profilePage.smallMW.closeMW();
+
+
+    });
 
     test('Two browsers', async ({browser}) => {
 
